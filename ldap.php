@@ -1,31 +1,58 @@
 <?php
-/*
-* Error setup, includes for ldap. Includes some wordpress stuff to handle user registration.
-*/
+/**
+ * ldap.php
+ * 
+ * Handles all interactions with the UC Davis LDAP Server
+ * @author Zachary Ennenga
+ */
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(ABSPATH . WPINC . '/pluggable.php');
 require_once(ABSPATH . 'wp-content/plugins/casPlugin/errors.php');
+/**
+ * @var Error object
+ */
 global $casError;
-/*
-* General LDAP helper class. Adds users to wordpress.
-*/
+/**
+ * ldapUsers
+ * 
+ * adds users via LDAP
+ *
+ */
 class ldapUsers	{
+	/**
+	 * 
+	 * @var LDAP Handle
+	 */
 	var $handle;
+	/**
+	 * 
+	 * @var string
+	 */
 	var $base;
+	/**
+	 * 
+	 * @var result set
+	 */
 	var $res;
-	/*
-	* Set the search base 
-	*/
+	/**
+	 * __construct
+	 * 
+	 * Sets the search base for all further queries
+	 * 
+	 * @param string $str
+	 */
 	function __construct($str)	{
 		$this->base = $str;
 	}
-	/*
-	* LDAP Connection initializer
-	*
-	* @param string $str LDAP Server Host
-	* @return bool success or failure of the initialization of the ldap handle
-	* @note I don't do this in the constructor such that I can branch based on success/error. Error supression is for friendlier errors later.
-	*/
+	/**
+	 * 
+	 * init
+	 * LDAP Connection initializer
+	 *
+	 * @note I don't do this in the constructor such that I can branch based on success/error. Error supression is for friendlier errors later.
+	 * @param string $str LDAP Server Host
+	 * @return bool success or failure of the initialization of the ldap handle
+	 */
 	function init($str)	{
 		$this->handle = @ldap_connect($str);
 		if (!$this->handle)	{
@@ -40,12 +67,22 @@ class ldapUsers	{
 			}
 		}
 	}
-	//General function to add users via a comma seperated list of identifiers.
+	/**
+	 * 
+	 * doList
+	 * 
+	 * Takes a list of uids/emails, and if they're found in ldap, adds them as wordpress users
+	 * 
+	 * @param string $list comma seperated list of who to add
+	 * @param string $param controls either email or uid lookup
+	 * @return boolean
+	 */
 	function doList($list,$param)	{
-		//breakup the list
+		//globalize error object
 		global $casError;
+		//break the list up
 		$arr = explode(',',$list);
-		//This is are "were there 0 errors" function. We can't just die; on an error since the whole "comma seperated" part is handled here.
+		//This is our "were there 0 errors" function. We can't just die; on an error since the whole "comma seperated" part is handled here.
 		$retval = true;
 		foreach($arr as $mem)	{
 			//execture the search
@@ -95,8 +132,14 @@ class ldapUsers	{
 		}
 		return $retval;
 	}
-	//Don't want to sorry about a seperate CSS file. Maybe I should just make one.
-	//Search the LDAP server this class is bound to. $search is the ldap search to perform.
+	/**
+	 * search
+	 * 
+	 * Perform an LDAP Query based on a predefined search base/query. Return only data useful for wordpress registrations.
+	 * Only grabs info useful for wordpress registrations.
+	 * 
+	 * @param string $search
+	 */
 	function search($search)	{
 		//I suppress errors on this such that I can handle them later with more friendly messages than the php ones.
 		//I only grab the data relevant to WP. Userid, email, first and last name.

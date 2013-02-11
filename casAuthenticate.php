@@ -1,14 +1,25 @@
 <?php
+/**
+ * casAuthenticate.php
+ * 
+ * File containing casAuthenticate class and associated functions
+ * 
+ */
 require_once(ABSPATH . 'wp-content/plugins/casPlugin/errors.php');
-/* 
-* main authentication class
-*/
+/**
+ * casAuthenticate
+ * 
+ * Handles all interactions with CAS
+ * 
+ * @author its-zach
+ *
+ */
 class casAuthenticate	{
-	/*
-	* Adds wordpress filters/hooks. Generates CAS client instance. Sets up validation.
-	* @return instance of casAuthenticate class
-	* @note only called at plugin start
-	*/
+	/**
+	 * 
+	 * Adds wordpress filters/hooks. Generates CAS client instance. Sets up validation.
+	 * 
+	 */
 	function __construct()	{
 		add_filter('authenticate', 'casAuthenticate::Auth', 10, 3);
 		add_action('wp_logout', 'casAuthenticate::Logout');
@@ -17,10 +28,12 @@ class casAuthenticate	{
 		//cURL cacert.pem -> cacert.crt so that we can verify the server
 		phpCAS::setCasServerCACert(CAS_CERT);
 	}
-	/*
-	* Main auth function
-	* @return void
-	*/
+	/**
+	 * Auth
+	 * 
+	 * Functions that performs the actual CAS Auth
+	 * 
+	 */
 	public function Auth() {
 		//Do auth
 		phpCAS::forceAuthentication();
@@ -48,17 +61,21 @@ class casAuthenticate	{
 			wp_redirect(site_url());
 		}
 	}
-	/* 
-	* Logout helper function
-	* @return void
-	*/
+	/**
+	 * Logout
+	 * 
+	 * Logout helper function
+	 * 
+	 */
 	public function Logout()	{
 		phpCAS::logoutWithUrl(site_url());
 	}
-	/*
-	* Error helper function. Handles displaying error after a successful CAS auth, but failed wordpress auth.
-	* @return void
-	*/
+	/**
+	 * Error
+	 * 
+	 * Error helper function. Handles displaying error after a successful CAS auth, but failed wordpress auth.
+	 * 
+	 */
 	public static function Error()	{
 		if (isset($_GET['noacc']))	{
 			casError::messageNow("You don't have a valid account for this site. Please contact the site administrator.","error");
