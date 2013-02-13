@@ -7,6 +7,11 @@
 ?>
 
 <?php
+/**
+ * casLogin.php
+ * 
+ * Main plugin file for the Cas Auth System Plugin. Initializes all core classes, sets up defines and includes.
+ */
 /*
  * CAS and LDAP server constants/defines
  * 
