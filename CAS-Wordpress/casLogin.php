@@ -27,6 +27,7 @@ define('LDAP_SEARCH_PATH',"ou=People,dc=ucdavis,dc=edu");
  * Add CSS wordpress hook
  */
 add_action( 'admin_enqueue_scripts', 'enqueueCSS' );
+
 /*
  * Global error setup
  */
