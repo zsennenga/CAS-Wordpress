@@ -1,6 +1,6 @@
 <?php 
 /* Plugin Name: CAS Auth System
- * Description: UC Davis CAS auth system for Wordpress
+ * Description: UC Davis CAS auth system for Wordpress. Requires php_curl and php_ldap.
  * Version: 1.0
  * Author: Zachary Ennenga
  */ 
@@ -72,6 +72,6 @@ else	{
  * Adds CSS to wordpress enqueue
  */
 function enqueueCSS()	{	
-	wp_enqueue_style('messages','/wp-content/plugins/casPlugin/messages.css');
+	wp_enqueue_style('messages','/wp-content/plugins/casPlugin/style.css');
 }
 ?>
