@@ -9,13 +9,14 @@ require_once(ABSPATH . 'wp-content/plugins/casPlugin/errors.php');
 /**
  * casAuthenticate
  * 
- * Handles all interactions with CAS
+ * Handles all interactions with the CAS
  * 
- * @author its-zach
+ * @author Zachary Ennenga
  *
  */
 class casAuthenticate	{
 	/**
+	 * __construct
 	 * 
 	 * Adds wordpress filters/hooks. Generates CAS client instance. Sets up validation.
 	 * 

@@ -1,20 +1,29 @@
 <?php
-/*
-* Setup Error, Include wordpress stuff to allow for some errors and whatnot
-*/
+/**
+ * casOptions.php
+ * 
+ * Contains the casOptions class and associated functions
+ */
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(ABSPATH . WPINC . '/pluggable.php');
 
 global $casError;
-/*
-* Quickie container class for the options menu and the like. Wordpress hook is created at construction, executed whenever wordpress says to.
-* the doError(); function in doMenu(); is 95% of the error reporting in this plugin. Most of it having to do with LDAP stuff.
-*/
+/**
+ * 
+ * casOptions
+ * 
+ * Constructs the LDAP add users page
+ * 
+ * @author zennenga
+ *
+ */
 class casOptions	{
-	/*
-	* Exists so we add the correct wordpress hook at the start of the program. Also adds the error handling hook.
-	* @return instance of casOptions
-	*/
+	/**
+	 * __construct
+	 * 
+	 * Instantiates casOptions. Adds wordpress hooks.
+	 * 
+	 */
 	function __construct() {
 		if (current_user_can("edit_users"))	{ 
 			add_submenu_page( 'users.php','CAS Options', 'Add CAS Users', 'manage_options', 'casUsers', 'casOptions::doMenu' );
@@ -22,10 +31,12 @@ class casOptions	{
 		add_action('admin_notices', 'casError::doError');
 	}
 	
-	/*
-	* Meat of the wordpress hook.
-	* @return void
-	*/
+	/**
+	 * doMenu
+	 * 
+	 * Adds the menu, renders the html
+	 * 
+	 */
 	function doMenu() {
 		global $casError;
 		if ( !current_user_can('edit_users') )  {

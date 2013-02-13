@@ -1,37 +1,38 @@
 <?php 
 /* Plugin Name: CAS Auth System
-Description: UC Davis CAS auth system for Wordpress
-Version: 1.0
-Author: Zachary Ennenga*/ ?>
+ * Description: UC Davis CAS auth system for Wordpress
+ * Version: 1.0
+ * Author: Zachary Ennenga
+ */ 
+?>
+
 <?php
-//Requires: PHP_LDAP, PHP_CURL
 /*
-* CAS Server Properties
-*/
+ * CAS and LDAP server constants/defines
+ * 
+ */
 define('CAS_SERVER', "cas.ucdavis.edu");
 define('CAS_PORT', 8443);
 define('CAS_URL', "/cas/");
 define('CAS_CERT', ABSPATH . "wp-content\plugins\casPlugin\cacert.crt");
-/*
-* Define LDAP Properties
-*/
+
 define('LDAP_SERVER',"ldap.ucdavis.edu");
 define('LDAP_SEARCH_PATH',"ou=People,dc=ucdavis,dc=edu");
 /*
-* Insert css for our options page and error messages
-*/
+ * Add CSS wordpress hook
+ */
 add_action( 'admin_enqueue_scripts', 'enqueueCSS' );
 /*
-* Load global error function
-*/
+ * Global error setup
+ */
 require_once(ABSPATH . 'wp-content/plugins/casPlugin/errors.php');
 
 global $casError;
 $casError = new casError();
 
 /*
-* Boilerplate wordpress includes to avoid breaking everything
-*/
+ * Wordpress includes
+ */
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(ABSPATH . WPINC . '/pluggable.php');
 
@@ -53,22 +54,23 @@ if ( !extension_loaded("curl") || !extension_loaded("ldap")) {
 }
 else	{
 	/*
-	* Load Plugin Components
-	*/
+	 * Plugin Includes
+	 */
 	include_once(ABSPATH . 'wp-content/plugins/casPlugin/CAS.php');
 	include_once(ABSPATH . 'wp-content/plugins/casPlugin/casAuthenticate.php');
 	include_once(ABSPATH . 'wp-content/plugins/casPlugin/optionsMenu.php');
 
 	/*
-	* Initialize plugin core classes
-	*/
+	 * Initialize plugin core classes
+	 */
 	new casAuthenticate();
 	new casOptions();
 }
-/*
-* Helper function for wordpress to load the css
-* @return void
-*/
+/**
+ * enqueueCSS
+ * 
+ * Adds CSS to wordpress enqueue
+ */
 function enqueueCSS()	{	
 	wp_enqueue_style('messages','/wp-content/plugins/casPlugin/messages.css');
 }
