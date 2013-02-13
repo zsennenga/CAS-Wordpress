@@ -44,16 +44,16 @@ extends CAS_ProxyChain
 implements CAS_ProxyChain_Interface
 {
 
-    /**
-     * Validate the size of the the list as compared to our chain.
-     *
-     * @param array $list list of proxies
-     *
-     * @return bool
-     */
-    protected function isSizeValid (array $list)
-    {
-        return (sizeof($this->chain) <= sizeof($list));
-    }
+	/**
+	 * Validate the size of the the list as compared to our chain.
+	 *
+	 * @param array $list list of proxies
+	 *
+	 * @return bool
+	 */
+	protected function isSizeValid (array $list)
+	{
+		return (sizeof($this->chain) <= sizeof($list));
+	}
 
 }

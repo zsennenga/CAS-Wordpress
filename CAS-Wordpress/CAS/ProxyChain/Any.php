@@ -48,17 +48,17 @@ class CAS_ProxyChain_Any
 implements CAS_ProxyChain_Interface
 {
 
-    /**
-     * Match a list of proxies.
-     *
-     * @param array $list The list of proxies in front of this service.
-     *
-     * @return bool
-     */
-    public function matches(array $list)
-    {
-        phpCAS::trace("Using CAS_ProxyChain_Any. No proxy validation is performed.");
-        return true;
-    }
+	/**
+	 * Match a list of proxies.
+	 *
+	 * @param array $list The list of proxies in front of this service.
+	 *
+	 * @return bool
+	 */
+	public function matches(array $list)
+	{
+		phpCAS::trace("Using CAS_ProxyChain_Any. No proxy validation is performed.");
+		return true;
+	}
 
 }

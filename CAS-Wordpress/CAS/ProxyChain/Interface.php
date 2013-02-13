@@ -41,13 +41,13 @@
 interface CAS_ProxyChain_Interface
 {
 
-    /**
-     * Match a list of proxies.
-     *
-     * @param array $list The list of proxies in front of this service.
-     *
-     * @return bool
-     */
-    public function matches(array $list);
+	/**
+	 * Match a list of proxies.
+	 *
+	 * @param array $list The list of proxies in front of this service.
+	 *
+	 * @return bool
+	 */
+	public function matches(array $list);
 
 }

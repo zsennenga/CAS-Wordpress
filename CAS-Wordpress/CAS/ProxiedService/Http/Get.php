@@ -37,16 +37,16 @@
  * 				$service->setUrl('http://www.example.com/path/');
  * 				$service->send();
  *				if ($service->getResponseStatusCode() == 200)
- *					return $service->getResponseBody();
+ 	*					return $service->getResponseBody();
  *				else
- *					// The service responded with an error code 404, 500, etc.
+ 	*					// The service responded with an error code 404, 500, etc.
  *					throw new Exception('The service responded with an error.');
  *
  *			} catch (CAS_ProxyTicketException $e) {
  *				if ($e->getCode() == PHPCAS_SERVICE_PT_FAILURE)
- *					return "Your login has timed out. You need to log in again.";
+ 	*					return "Your login has timed out. You need to log in again.";
  *				else
- *					// Other proxy ticket errors are from bad request format (shouldn't happen)
+ 	*					// Other proxy ticket errors are from bad request format (shouldn't happen)
  *					// or CAS server failure (unlikely) so lets just stop if we hit those.
  *					throw $e;
  *			} catch (CAS_ProxiedService_Exception $e) {
@@ -68,17 +68,17 @@ class CAS_ProxiedService_Http_Get
 extends CAS_ProxiedService_Http_Abstract
 {
 
-    /**
-     * Add any other parts of the request needed by concrete classes
-     *
-     * @param CAS_Request_RequestInterface $request request interface
-     *
-     * @return void
-     */
-    protected function populateRequest (CAS_Request_RequestInterface $request)
-    {
-        // do nothing, since the URL has already been sent and that is our
-        // only data.
-    }
+	/**
+	 * Add any other parts of the request needed by concrete classes
+	 *
+	 * @param CAS_Request_RequestInterface $request request interface
+	 *
+	 * @return void
+	 */
+	protected function populateRequest (CAS_Request_RequestInterface $request)
+	{
+		// do nothing, since the URL has already been sent and that is our
+		// only data.
+	}
 }
 ?>

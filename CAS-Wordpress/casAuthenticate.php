@@ -1,25 +1,25 @@
 <?php
 /**
  * casAuthenticate.php
- * 
+ *
  * File containing casAuthenticate class and associated functions
- * 
- */
-require_once(ABSPATH . 'wp-content/plugins/casPlugin/errors.php');
-/**
- * casAuthenticate
- * 
- * Handles all interactions with the CAS
- * 
- * @author Zachary Ennenga
  *
  */
+require_once(plugin_dir_path(__FILE__) . 'errors.php');
+/**
+ * casAuthenticate
+ *
+ * Handles all interactions with the CAS
+ *
+ * @author Zachary Ennenga
+ *
+*/
 class casAuthenticate	{
 	/**
 	 * __construct
-	 * 
+	 *
 	 * Adds wordpress filters/hooks. Generates CAS client instance. Sets up validation.
-	 * 
+	 *
 	 */
 	function __construct()	{
 		add_filter('authenticate', 'casAuthenticate::Auth', 10, 3);
@@ -31,9 +31,9 @@ class casAuthenticate	{
 	}
 	/**
 	 * Auth
-	 * 
+	 *
 	 * Functions that performs the actual CAS Auth
-	 * 
+	 *
 	 */
 	public function Auth() {
 		//Do auth
@@ -64,18 +64,18 @@ class casAuthenticate	{
 	}
 	/**
 	 * Logout
-	 * 
+	 *
 	 * Logout helper function
-	 * 
+	 *
 	 */
 	public function Logout()	{
 		phpCAS::logoutWithUrl(site_url());
 	}
 	/**
 	 * Error
-	 * 
+	 *
 	 * Error helper function. Handles displaying error after a successful CAS auth, but failed wordpress auth.
-	 * 
+	 *
 	 */
 	public static function Error()	{
 		if (isset($_GET['noacc']))	{

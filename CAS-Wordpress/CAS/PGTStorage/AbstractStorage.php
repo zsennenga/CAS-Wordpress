@@ -45,175 +45,175 @@
 
 abstract class CAS_PGTStorage_AbstractStorage
 {
-    /**
-     * @addtogroup internalPGTStorage
-     * @{
-     */
+	/**
+	 * @addtogroup internalPGTStorage
+	 * @{
+	 */
 
-    // ########################################################################
-    //  CONSTRUCTOR
-    // ########################################################################
+	// ########################################################################
+	//  CONSTRUCTOR
+	// ########################################################################
 
-    /**
-     * The constructor of the class, should be called only by inherited classes.
-     *
-     * @param CAS_Client $cas_parent the CAS _client instance that creates the
-     * current object.
-     *
-     * @return void
-     *
-     * @protected
-     */
-    function __construct($cas_parent)
-    {
-        phpCAS::traceBegin();
-        if ( !$cas_parent->isProxy() ) {
-            phpCAS::error('defining PGT storage makes no sense when not using a CAS proxy');
-        }
-        phpCAS::traceEnd();
-    }
+	/**
+	 * The constructor of the class, should be called only by inherited classes.
+	 *
+	 * @param CAS_Client $cas_parent the CAS _client instance that creates the
+	 * current object.
+	 *
+	 * @return void
+	 *
+	 * @protected
+	 */
+	function __construct($cas_parent)
+	{
+		phpCAS::traceBegin();
+		if ( !$cas_parent->isProxy() ) {
+			phpCAS::error('defining PGT storage makes no sense when not using a CAS proxy');
+		}
+		phpCAS::traceEnd();
+	}
 
-    // ########################################################################
-    //  DEBUGGING
-    // ########################################################################
+	// ########################################################################
+	//  DEBUGGING
+	// ########################################################################
 
-    /**
-     * This virtual method returns an informational string giving the type of storage
-     * used by the object (used for debugging purposes).
-     *
-     * @return void
-     *
-     * @public
-     */
-    function getStorageType()
-    {
-        phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
-    }
+	/**
+	 * This virtual method returns an informational string giving the type of storage
+	 * used by the object (used for debugging purposes).
+	 *
+	 * @return void
+	 *
+	 * @public
+	 */
+	function getStorageType()
+	{
+		phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
+	}
 
-    /**
-     * This virtual method returns an informational string giving informations on the
-     * parameters of the storage.(used for debugging purposes).
-     *
-     * @return void
-     *
-     * @public
-     */
-    function getStorageInfo()
-    {
-        phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
-    }
+	/**
+	 * This virtual method returns an informational string giving informations on the
+	 * parameters of the storage.(used for debugging purposes).
+	 *
+	 * @return void
+	 *
+	 * @public
+	 */
+	function getStorageInfo()
+	{
+		phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
+	}
 
-    // ########################################################################
-    //  ERROR HANDLING
-    // ########################################################################
+	// ########################################################################
+	//  ERROR HANDLING
+	// ########################################################################
 
-    /**
-     * string used to store an error message. Written by
-     * PGTStorage::setErrorMessage(), read by PGTStorage::getErrorMessage().
-     *
-     * @hideinitializer
-     * @deprecated not used.
-     */
-    var $_error_message=false;
+	/**
+	 * string used to store an error message. Written by
+	 * PGTStorage::setErrorMessage(), read by PGTStorage::getErrorMessage().
+	 *
+	 * @hideinitializer
+	 * @deprecated not used.
+	 */
+	var $_error_message=false;
 
-    /**
-     * This method sets en error message, which can be read later by
-     * PGTStorage::getErrorMessage().
-     *
-     * @param string $error_message an error message
-     *
-     * @return void
-     *
-     * @deprecated not used.
-     */
-    function setErrorMessage($error_message)
-    {
-        $this->_error_message = $error_message;
-    }
+	/**
+	 * This method sets en error message, which can be read later by
+	 * PGTStorage::getErrorMessage().
+	 *
+	 * @param string $error_message an error message
+	 *
+	 * @return void
+	 *
+	 * @deprecated not used.
+	 */
+	function setErrorMessage($error_message)
+	{
+		$this->_error_message = $error_message;
+	}
 
-    /**
-     * This method returns an error message set by PGTStorage::setErrorMessage().
-     *
-     * @return an error message when set by PGTStorage::setErrorMessage(), FALSE
-     * otherwise.
-     *
-     * @deprecated not used.
-     */
-    function getErrorMessage()
-    {
-        return $this->_error_message;
-    }
+	/**
+	 * This method returns an error message set by PGTStorage::setErrorMessage().
+	 *
+	 * @return an error message when set by PGTStorage::setErrorMessage(), FALSE
+	 * otherwise.
+	 *
+	 * @deprecated not used.
+	 */
+	function getErrorMessage()
+	{
+		return $this->_error_message;
+	}
 
-    // ########################################################################
-    //  INITIALIZATION
-    // ########################################################################
+	// ########################################################################
+	//  INITIALIZATION
+	// ########################################################################
 
-    /**
-     * a boolean telling if the storage has already been initialized. Written by
-     * PGTStorage::init(), read by PGTStorage::isInitialized().
-     *
-     * @hideinitializer
-     */
-    var $_initialized = false;
+	/**
+	 * a boolean telling if the storage has already been initialized. Written by
+	 * PGTStorage::init(), read by PGTStorage::isInitialized().
+	 *
+	 * @hideinitializer
+	 */
+	var $_initialized = false;
 
-    /**
-     * This method tells if the storage has already been intialized.
-     *
-     * @return a boolean
-     *
-     * @protected
-     */
-    function isInitialized()
-    {
-        return $this->_initialized;
-    }
+	/**
+	 * This method tells if the storage has already been intialized.
+	 *
+	 * @return a boolean
+	 *
+	 * @protected
+	 */
+	function isInitialized()
+	{
+		return $this->_initialized;
+	}
 
-    /**
-     * This virtual method initializes the object.
-     *
-     * @return void
-     */
-    function init()
-    {
-        $this->_initialized = true;
-    }
+	/**
+	 * This virtual method initializes the object.
+	 *
+	 * @return void
+	 */
+	function init()
+	{
+		$this->_initialized = true;
+	}
 
-    // ########################################################################
-    //  PGT I/O
-    // ########################################################################
+	// ########################################################################
+	//  PGT I/O
+	// ########################################################################
 
-    /**
-     * This virtual method stores a PGT and its corresponding PGT Iuo.
-     *
-     * @param string $pgt     the PGT
-     * @param string $pgt_iou the PGT iou
-     *
-     * @return void
-     *
-     * @note Should never be called.
-     *
-     */
-    function write($pgt,$pgt_iou)
-    {
-        phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
-    }
+	/**
+	 * This virtual method stores a PGT and its corresponding PGT Iuo.
+	 *
+	 * @param string $pgt     the PGT
+	 * @param string $pgt_iou the PGT iou
+	 *
+	 * @return void
+	 *
+	 * @note Should never be called.
+	 *
+	 */
+	function write($pgt,$pgt_iou)
+	{
+		phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
+	}
 
-    /**
-     * This virtual method reads a PGT corresponding to a PGT Iou and deletes
-     * the corresponding storage entry.
-     *
-     * @param string $pgt_iou the PGT iou
-     *
-     * @return void
-     *
-     * @note Should never be called.
-     */
-    function read($pgt_iou)
-    {
-        phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
-    }
+	/**
+	 * This virtual method reads a PGT corresponding to a PGT Iou and deletes
+	 * the corresponding storage entry.
+	 *
+	 * @param string $pgt_iou the PGT iou
+	 *
+	 * @return void
+	 *
+	 * @note Should never be called.
+	 */
+	function read($pgt_iou)
+	{
+		phpCAS::error(__CLASS__.'::'.__FUNCTION__.'() should never be called');
+	}
 
-    /** @} */
+	/** @} */
 
 }
 

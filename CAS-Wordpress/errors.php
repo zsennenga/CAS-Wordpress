@@ -1,9 +1,9 @@
 <?php
 /**
  * casError
- * 
+ *
  * Error handling class
- * 
+ *
  * @author Zachary Ennenga
  *
  */
@@ -11,7 +11,7 @@ class casError	{
 	var $listA;
 	/**
 	 * __construct
-	 * 
+	 *
 	 * initialize the error list
 	 *
 	 */
@@ -20,9 +20,9 @@ class casError	{
 	}
 	/**
 	 * messageNow
-	 * 
+	 *
 	 * Send an error message when this is called, don't add to queue
-	 * 
+	 *
 	 *  @param string $str message string
 	 *  @param string $type type of message. Error, warning, success are the only ones I use.
 	 */
@@ -31,9 +31,9 @@ class casError	{
 	}
 	/**
 	 * message
-	 * 
+	 *
 	 * Add error to queue
-	 * 
+	 *
 	 * @param string $str message string
 	 * @param string $type type of message. Error, warning, success are the only ones I use.
 	 */
@@ -42,7 +42,7 @@ class casError	{
 	}
 	/**
 	 * doError
-	 * 
+	 *
 	 * Print every error in the queue, clear the array
 	 */
 	function doError()	{
@@ -52,6 +52,29 @@ class casError	{
 			array_shift($casError->listA);
 		}
 		$casError->listA = array();
+	}
+	/**
+	 * 
+	 * handleError
+	 * 
+	 * Used to changes warnings into catchable exceptions
+	 * 
+	 * @param int $errno
+	 * @param string $errstr
+	 * @param file $errfile
+	 * @param int $errline
+	 * @param array $errcontext
+	 * @throws Exception
+	 * @return boolean
+	 */
+	function handleError($errno, $errstr, $errfile, $errline, array $errcontext)
+	{
+		// error was suppressed with the @-operator
+		if (0 === error_reporting()) {
+			return false;
+		}
+	
+		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	}
 }
 ?>

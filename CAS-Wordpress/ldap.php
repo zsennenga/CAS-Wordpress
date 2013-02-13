@@ -1,78 +1,89 @@
 <?php
 /**
  * ldap.php
- * 
+ *
  * Handles all interactions with the UC Davis LDAP Server
  * @author Zachary Ennenga
  */
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(ABSPATH . WPINC . '/pluggable.php');
-require_once(ABSPATH . 'wp-content/plugins/casPlugin/errors.php');
+require_once(plugin_dir_path(__FILE__). 'errors.php');
 /**
- * @var Error object
- */
+ * @var casError global casError instance for all error handling
+*/
 global $casError;
 /**
  * ldapUsers
- * 
+ *
  * adds users via LDAP
  *
  */
 class ldapUsers	{
 	/**
-	 * 
+	 *
 	 * @var LDAP Handle
 	 */
 	var $handle;
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	var $base;
 	/**
-	 * 
+	 *
 	 * @var result set
 	 */
 	var $res;
 	/**
 	 * __construct
-	 * 
+	 *
 	 * Sets the search base for all further queries
-	 * 
+	 *
 	 * @param string $str
 	 */
 	function __construct($str)	{
 		$this->base = $str;
 	}
 	/**
-	 * 
+	 *
 	 * init
-	 * LDAP Connection initializer
+	 *
+	 * LDAP Connection initializer.
+	 *
+	 * Errors are suppressed such that I can handle them later in a more wordpress-friendly way
 	 *
 	 * @note I don't do this in the constructor such that I can branch based on success/error. Error supression is for friendlier errors later.
 	 * @param string $str LDAP Server Host
 	 * @return bool success or failure of the initialization of the ldap handle
 	 */
 	function init($str)	{
-		$this->handle = @ldap_connect($str);
-		if (!$this->handle)	{
+		global $casError;
+		set_error_handler('casError::handleError', E_WARNING);
+		try	{
+			$this->handle = ldap_connect($str);
+		}
+		catch	(Exception $e) {
+			$casError->message("LDAP Handle Instantion Error: " . $e->getMessage(), "error");
+			restore_error_handler();
 			return false;
 		}
-		else	{
-			if(@ldap_bind($this->handle))	{
-				return true;
-			}
-			else	{
-				return false;
-			}
+		try {
+			ldap_bind($this->handle);
 		}
+		catch (Exception $e)	{
+			$casError->message("LDAP Bind Error: ".$e->getMessage(),"error");
+			restore_error_handler();
+			return false;
+		}
+		restore_error_handler();
+		return true;
 	}
 	/**
-	 * 
+	 *
 	 * doList
-	 * 
+	 *
 	 * Takes a list of uids/emails, and if they're found in ldap, adds them as wordpress users
-	 * 
+	 *
 	 * @param string $list comma seperated list of who to add
 	 * @param string $param controls either email or uid lookup
 	 * @return boolean
@@ -104,7 +115,7 @@ class ldapUsers	{
 					$res = ldap_get_entries($this->handle,$this->res);
 					for ($i = 0; $i < $len; $i++) {
 						//generate a random 15-20 character password across a more or less complete set of characters.
-						$pass .= $characters[rand(0, strlen($charset) - 1)];
+						$pass .= $charset[rand(0, strlen($charset) - 1)];
 					}
 					if ($res['count'] == 0)	{
 						$casError->message("$mem was not found. Make you spelled $mem correctly.","error");
@@ -123,9 +134,9 @@ class ldapUsers	{
 					}
 				}
 				else	{
-					//Since LDAP is read only, and our prompt is behind the wp admin gate
+					//Since our LDAP handle is read only, and our prompt is behind the wp admin gate
 					//I don't really care about malformed or "injected" queries. Just throw an error on invalid query and move on
-					$casError->message("Invalid Search $mem. Make sure you are ONLY entering a comma seperated list of email addresses or usernames","error");
+					$casError->message("Invalid Search '$mem'. Make sure you are ONLY entering a comma seperated list of email addresses or usernames","error");
 					$retval = false;
 				}
 			}
@@ -134,16 +145,24 @@ class ldapUsers	{
 	}
 	/**
 	 * search
-	 * 
+	 *
 	 * Perform an LDAP Query based on a predefined search base/query. Return only data useful for wordpress registrations.
 	 * Only grabs info useful for wordpress registrations.
-	 * 
+	 *
 	 * @param string $search
 	 */
 	function search($search)	{
-		//I suppress errors on this such that I can handle them later with more friendly messages than the php ones.
+		global $casError;
 		//I only grab the data relevant to WP. Userid, email, first and last name.
-		$this->res = @ldap_search($this->handle,$this->base, $search, array('uid','mail','givenName','sn'));
+		set_error_handler('casError::handleError', E_WARNING);
+		try	{
+			$this->res = ldap_search($this->handle,$this->base, $search, array('uid','mail','givenName','sn'));
+		}
+		catch (Exception $e)	{
+			$casError->message("LDAP Query Error: " . $e->getMessage(), "error");
+			$this->res = false;
+		}
+		restore_error_handler();
 	}
 }
 ?>

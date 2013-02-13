@@ -1,0 +1,65 @@
+.errorc {
+	position: relative;
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 30%;
+	margin-right: 30%;
+	width: 40%;
+	color: #D8000C;
+	background-color: #FFBABA;
+	border: 1px solid;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	display: block;
+}
+
+.successc {
+	position: relative;
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 30%;
+	margin-right: 30%;
+	width: 40%;
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	border: 1px solid;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	display: block;
+}
+
+.warningc {
+	position: relative;
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 30%;
+	margin-right: 30%;
+	width: 40%;
+	color: #9F6000;
+	background-color: #FEEFB3;
+	border: 1px solid;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	display: block;
+}
+
+.casLabel {
+	vertical-align: middle;
+	width: 150px;
+	float: left;
+	display: inline-block;
+}
+
+.casField {
+	valign: center;
+	float: left;
+}
+
+.casButton {
+	padding-left: 10px;
+	width: 150px;
+	float: left;
+}

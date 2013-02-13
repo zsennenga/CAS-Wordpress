@@ -39,16 +39,16 @@
  *				$service->setBody(''<?xml version="1.0"?'.'><methodCall><methodName>example.search</methodName></methodCall>');
  * 				$service->send();
  *				if ($service->getResponseStatusCode() == 200)
- *					return $service->getResponseBody();
+ 	*					return $service->getResponseBody();
  *				else
- *					// The service responded with an error code 404, 500, etc.
+ 	*					// The service responded with an error code 404, 500, etc.
  *					throw new Exception('The service responded with an error.');
  *
  *			} catch (CAS_ProxyTicketException $e) {
  *				if ($e->getCode() == PHPCAS_SERVICE_PT_FAILURE)
- *					return "Your login has timed out. You need to log in again.";
+ 	*					return "Your login has timed out. You need to log in again.";
  *				else
- *					// Other proxy ticket errors are from bad request format (shouldn't happen)
+ 	*					// Other proxy ticket errors are from bad request format (shouldn't happen)
  *					// or CAS server failure (unlikely) so lets just stop if we hit those.
  *					throw $e;
  *			} catch (CAS_ProxiedService_Exception $e) {
@@ -70,74 +70,74 @@ class CAS_ProxiedService_Http_Post
 extends CAS_ProxiedService_Http_Abstract
 {
 
-    /**
-     * The content-type of this request
-     *
-     * @var string $_contentType
-     */
-    private $_contentType;
+	/**
+	 * The content-type of this request
+	 *
+	 * @var string $_contentType
+	 */
+	private $_contentType;
 
-    /**
-     * The body of the this request
-     *
-     * @var string $_body
-     */
-    private $_body;
+	/**
+	 * The body of the this request
+	 *
+	 * @var string $_body
+	 */
+	private $_body;
 
-    /**
-     * Set the content type of this POST request.
-     *
-     * @param string $contentType content type
-     *
-     * @return void
-     * @throws CAS_OutOfSequenceException If called after the Request has been sent.
-     */
-    public function setContentType ($contentType)
-    {
-        if ($this->hasBeenSent()) {
-            throw new CAS_OutOfSequenceException('Cannot set the content type, request already sent.');
-        }
+	/**
+	 * Set the content type of this POST request.
+	 *
+	 * @param string $contentType content type
+	 *
+	 * @return void
+	 * @throws CAS_OutOfSequenceException If called after the Request has been sent.
+	 */
+	public function setContentType ($contentType)
+	{
+		if ($this->hasBeenSent()) {
+			throw new CAS_OutOfSequenceException('Cannot set the content type, request already sent.');
+		}
 
-        $this->_contentType = $contentType;
-    }
+		$this->_contentType = $contentType;
+	}
 
-    /**
-     * Set the body of this POST request.
-     *
-     * @param string $body body to set
-     *
-     * @return void
-     * @throws CAS_OutOfSequenceException If called after the Request has been sent.
-     */
-    public function setBody ($body)
-    {
-        if ($this->hasBeenSent()) {
-            throw new CAS_OutOfSequenceException('Cannot set the body, request already sent.');
-        }
+	/**
+	 * Set the body of this POST request.
+	 *
+	 * @param string $body body to set
+	 *
+	 * @return void
+	 * @throws CAS_OutOfSequenceException If called after the Request has been sent.
+	 */
+	public function setBody ($body)
+	{
+		if ($this->hasBeenSent()) {
+			throw new CAS_OutOfSequenceException('Cannot set the body, request already sent.');
+		}
 
-        $this->_body = $body;
-    }
+		$this->_body = $body;
+	}
 
-    /**
-     * Add any other parts of the request needed by concrete classes
-     *
-     * @param CAS_Request_RequestInterface $request request interface class
-     *
-     * @return void
-     */
-    protected function populateRequest (CAS_Request_RequestInterface $request)
-    {
-        if (empty($this->_contentType) && !empty($this->_body)) {
-            throw new CAS_ProxiedService_Exception("If you pass a POST body, you must specify a content type via ".get_class($this).'->setContentType($contentType).');
-        }
+	/**
+	 * Add any other parts of the request needed by concrete classes
+	 *
+	 * @param CAS_Request_RequestInterface $request request interface class
+	 *
+	 * @return void
+	 */
+	protected function populateRequest (CAS_Request_RequestInterface $request)
+	{
+		if (empty($this->_contentType) && !empty($this->_body)) {
+			throw new CAS_ProxiedService_Exception("If you pass a POST body, you must specify a content type via ".get_class($this).'->setContentType($contentType).');
+		}
 
-        $request->makePost();
-        if (!empty($this->_body)) {
-            $request->addHeader('Content-Type: '.$this->_contentType);
-            $request->addHeader('Content-Length: '.strlen($this->_body));
-            $request->setPostBody($this->_body);
-        }
-    }
+		$request->makePost();
+		if (!empty($this->_body)) {
+			$request->addHeader('Content-Type: '.$this->_contentType);
+			$request->addHeader('Content-Length: '.strlen($this->_body));
+			$request->setPostBody($this->_body);
+		}
+	}
 
 
 }

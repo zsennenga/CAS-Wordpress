@@ -1,20 +1,20 @@
 <?php
 /**
  * optionsMenu.php
- * 
+ *
  * Generates the options menu in the admin panel
  * @author Zachary Ennenga
  */
-require_once(ABSPATH . 'wp-content/plugins/casPlugin/ldap.php');
-require_once(ABSPATH . 'wp-content/plugins/casPlugin/casOptions.php');
+require_once(plugin_dir_path(__FILE__). 'ldap.php');
+require_once(plugin_dir_path(__FILE__). 'casOptions.php');
 /**
- * @var Error object
- */
+ * @var casError object
+*/
 global $casError;
 
 /*
  * Validate and send registration requests
- */
+*/
 if (isset($_POST['subemail']) || isset($_POST['subuname']))	{
 	//Set up ldap instance
 	$ldap = new ldapUsers(LDAP_SEARCH_PATH);

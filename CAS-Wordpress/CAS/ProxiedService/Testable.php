@@ -40,9 +40,9 @@
  *		protected function initializeProxyTicket() {
  *			// Allow usage of a particular CAS_Client for unit testing.
  *			if (is_null($this->casClient))
- *				phpCAS::initializeProxiedService($this);
+ 	*				phpCAS::initializeProxiedService($this);
  *			else
- *				$this->casClient->initializeProxiedService($this);
+ 	*				$this->casClient->initializeProxiedService($this);
  *		}
  *
  * @class    CAS_ProxiedService_Testabel
@@ -55,19 +55,19 @@
 interface CAS_ProxiedService_Testable
 {
 
-    /**
-     * Use a particular CAS_Client->initializeProxiedService() rather than the
-     * static phpCAS::initializeProxiedService().
-     *
-     * This method should not be called in standard operation, but is needed for unit
-     * testing.
-     *
-     * @param CAS_Client $casClient Cas client object
-     *
-     * @return void
-     * @throws CAS_OutOfSequenceException If called after a proxy ticket has already been initialized/set.
-     */
-    public function setCasClient (CAS_Client $casClient);
+	/**
+	 * Use a particular CAS_Client->initializeProxiedService() rather than the
+	 * static phpCAS::initializeProxiedService().
+	 *
+	 * This method should not be called in standard operation, but is needed for unit
+	 * testing.
+	 *
+	 * @param CAS_Client $casClient Cas client object
+	 *
+	 * @return void
+	 * @throws CAS_OutOfSequenceException If called after a proxy ticket has already been initialized/set.
+	 */
+	public function setCasClient (CAS_Client $casClient);
 
 }
 ?>

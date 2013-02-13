@@ -42,42 +42,42 @@
 interface CAS_Request_MultiRequestInterface
 {
 
-    /*********************************************************
-     * Add Requests
-    *********************************************************/
+	/*********************************************************
+	 * Add Requests
+	*********************************************************/
 
-    /**
-     * Add a new Request to this batch.
-     * Note, implementations will likely restrict requests to their own concrete
-     * class hierarchy.
-     *
-     * @param CAS_Request_RequestInterface $request request interface
-     *
-     * @return void
-     * @throws CAS_OutOfSequenceException If called after the Request has been
-     * sent.
-     * @throws CAS_InvalidArgumentException If passed a Request of the wrong
-     * implmentation.
-     */
-    public function addRequest (CAS_Request_RequestInterface $request);
+	/**
+	 * Add a new Request to this batch.
+	 * Note, implementations will likely restrict requests to their own concrete
+	 * class hierarchy.
+	 *
+	 * @param CAS_Request_RequestInterface $request request interface
+	 *
+	 * @return void
+	 * @throws CAS_OutOfSequenceException If called after the Request has been
+	 * sent.
+	 * @throws CAS_InvalidArgumentException If passed a Request of the wrong
+	 * implmentation.
+	 */
+	public function addRequest (CAS_Request_RequestInterface $request);
 
-    /**
-     * Retrieve the number of requests added to this batch.
-     *
-     * @return number of request elements
-     */
-    public function getNumRequests ();
+	/**
+	 * Retrieve the number of requests added to this batch.
+	 *
+	 * @return number of request elements
+	*/
+	public function getNumRequests ();
 
-    /*********************************************************
-     * 2. Send the Request
-    *********************************************************/
+	/*********************************************************
+	 * 2. Send the Request
+	*********************************************************/
 
-    /**
-     * Perform the request. After sending, all requests will have their
-     * responses poulated.
-     *
-     * @return bool TRUE on success, FALSE on failure.
-     * @throws CAS_OutOfSequenceException If called multiple times.
-     */
-    public function send ();
+	/**
+	 * Perform the request. After sending, all requests will have their
+	 * responses poulated.
+	 *
+	 * @return bool TRUE on success, FALSE on failure.
+	 * @throws CAS_OutOfSequenceException If called multiple times.
+	*/
+	public function send ();
 }
